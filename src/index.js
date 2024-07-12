@@ -154,13 +154,15 @@ app.post("/message", (request, response) => {
 app.post("/message/:email", (request, response) => {
   const { email } = request.params;
 
-  const userMessages = messages.filter((user) => user.email === email);
+  const user = users.find((user) => user.email === email);
 
-  if (!userMessages) {
+  if (!user) {
     return response
       .status(404)
       .json({ message: "Email não encontrado, verifique ou crie uma conta" });
   }
+  
+  const userMessages = messages.filter((user) => user.email === email);
 
   response.status(200).json({ message: "Seja bem vindo!", userMessages });
 });
